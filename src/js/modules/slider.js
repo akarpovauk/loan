@@ -16,9 +16,11 @@ export default class Slider {
 		}
 
 		this.slides.forEach(slide => {
+			slide.classList.add('animated');
+			slide.classList.remove('fadeIn');
 			slide.style.display = 'none';
 		});
-
+		this.slides[this.slideIndex - 1].classList.add('fadeIn');
 		this.slides[this.slideIndex - 1].style.display = 'block';
 	}
 
