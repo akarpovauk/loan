@@ -1,8 +1,8 @@
 import Slider from './slider';
 
 export default class MainSlider extends Slider {
-	constructor(page, btns) {
-		super(page, btns);
+	constructor(btns) {
+		super(btns);
 	}
 
 	showSlides(n) {
@@ -27,12 +27,18 @@ export default class MainSlider extends Slider {
 				this.hanson.classList.remove('slideInUp');
 			}
 		} catch(e) {}
-
-		this.slides.forEach(slide => {
+		// console.log(this.slides);
+		// this.slides.forEach(slide => {
+		// 	slide.classList.add('animated');
+		// 	slide.classList.remove('fadeIn');
+		// 	slide.style.display = 'none';
+		// });
+		for (const slide of this.slides) {
 			slide.classList.add('animated');
 			slide.classList.remove('fadeIn');
 			slide.style.display = 'none';
-		});
+		}
+			
 		this.slides[this.slideIndex - 1].classList.add('fadeIn');
 		this.slides[this.slideIndex - 1].style.display = 'block';
 	}
