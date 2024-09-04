@@ -25,15 +25,18 @@ class Difference {
     column.querySelector('.plus').addEventListener('click', () => {
       if (counter !== items.length - 2) {
         items[counter].style.display = 'flex';
+        items[counter].classList.add('fadeIn');
         counter++;
       } else {
         items[counter].style.display = 'flex';
+        items[counter].classList.add('fadeInUp');
         items[items.length - 1].remove();
       }
     });
   }
   hideitems(items) {
     items.forEach((item, i, arr) => {
+      item.classList.add('animated');
       if (i !== arr.length - 1) {
         item.style.display = 'none';
       }
