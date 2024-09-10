@@ -290,23 +290,40 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
   plusSlides(n) {
     this.showSlides(this.slideIndex += n);
   }
+  bindTriggers() {
+    this.btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.plusSlides(1);
+      });
+      btn.parentNode.previousElementSibling.addEventListener('click', e => {
+        e.preventDefault();
+        this.slideIndex = 1;
+        this.showSlides(this.slideIndex);
+      });
+    });
+    this.prevModule.forEach(arrow => {
+      arrow.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.plusSlides(-1);
+      });
+    });
+    this.nextModule.forEach(arrow => {
+      arrow.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.plusSlides(1);
+      });
+    });
+  }
   render() {
-    try {
+    if (this.container) {
       try {
         this.hanson = document.querySelector('.hanson');
       } catch (e) {}
-      this.btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          this.plusSlides(1);
-        });
-        btn.parentNode.previousElementSibling.addEventListener('click', e => {
-          e.preventDefault();
-          this.slideIndex = 1;
-          this.showSlides(this.slideIndex);
-        });
-      });
       this.showSlides(this.slideIndex);
-    } catch (e) {}
+      this.bindTriggers();
+    }
   }
 }
 
@@ -410,6 +427,8 @@ class Slider {
     btns = null,
     next = null,
     prev = null,
+    prevModule = null,
+    nextModule = null,
     activeClass = '',
     animate,
     autoplay
@@ -423,6 +442,8 @@ class Slider {
     this.btns = document.querySelectorAll(btns);
     this.prev = document.querySelector(prev);
     this.next = document.querySelector(next);
+    this.prevModule = document.querySelectorAll(prevModule);
+    this.nextModule = document.querySelectorAll(nextModule);
     this.activeClass = activeClass;
     this.animate = animate;
     this.autoplay = autoplay;
@@ -30734,6 +30755,13 @@ window.addEventListener('DOMContentLoaded', () => {
     container: '.page'
   });
   slider.render();
+  const modulePageSlider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    btns: '.next',
+    container: '.moduleapp',
+    prevModule: '.prevmodule',
+    nextModule: '.nextmodule'
+  });
+  modulePageSlider.render();
   const showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
     container: '.showup__content-slider',
     prev: '.showup__prev',
