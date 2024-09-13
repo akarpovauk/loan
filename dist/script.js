@@ -30783,6 +30783,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
 /* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './modules/slider/showInfo'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+
 
 
 
@@ -30829,6 +30831,7 @@ window.addEventListener('DOMContentLoaded', () => {
   new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.module__video-item .play', '.overlay').init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officernew', '.officer__card-item').init();
   new _modules_forms__WEBPACK_IMPORTED_MODULE_4__["default"]('.form').init();
+  new Object(function webpackMissingModule() { var e = new Error("Cannot find module './modules/slider/showInfo'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())('.plus__content').init();
 });
 /******/ })()
 ;
