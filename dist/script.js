@@ -332,11 +332,13 @@ class ShowInfo {
   }
   bindTriggers() {
     this.triggers.forEach(trigger => {
-      const sibling = trigger.closest('.module__info-show').nextElementSibling;
-      sibling.classList.add('animated');
-      trigger.addEventListener('click', () => {
-        this.toggleMessage(sibling);
-      });
+      try {
+        const sibling = trigger.closest('.module__info-show').nextElementSibling;
+        sibling.classList.add('animated');
+        trigger.addEventListener('click', () => {
+          this.toggleMessage(sibling);
+        });
+      } catch (e) {}
     });
   }
   init() {
@@ -382,12 +384,14 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
           this.hanson.classList.remove('slideInUp');
         }
       } catch (e) {}
+
       // console.log(this.slides);
       // this.slides.forEach(slide => {
       // 	slide.classList.add('animated');
       // 	slide.classList.remove('fadeIn');
       // 	slide.style.display = 'none';
-      // });
+      // }); 
+
       for (const slide of this.slides) {
         slide.classList.add('animated');
         slide.classList.remove('fadeIn');
@@ -396,6 +400,35 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
       this.slides[this.slideIndex - 1].classList.add('fadeIn');
       this.slides[this.slideIndex - 1].style.display = 'block';
     } catch (e) {}
+  }
+  link() {
+    let path = 'modules.html';
+    const link = document.createElement('a');
+    link.setAttribute('href', path);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    console.log('hi');
+  }
+  linkPageToModels() {
+    const trigger = document.querySelector('.showup__content-explore .plus');
+    trigger.addEventListener('click', () => {
+      this.link();
+    });
+  }
+  linkCardsToModels(cards) {
+    this.cards = document.querySelectorAll(cards);
+    this.cards.forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.classList.contains('card-active')) {
+          let index = card.querySelector('.card__controls-count');
+          index = +index.textContent.replace(/[^0-9]/g, '');
+          console.log(index);
+          this.link();
+        }
+      });
+    });
   }
   plusSlides(n) {
     this.showSlides(this.slideIndex += n);
@@ -406,9 +439,11 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
         this.plusSlides(1);
       });
       btn.parentNode.previousElementSibling.addEventListener('click', e => {
-        e.preventDefault();
-        this.slideIndex = 1;
-        this.showSlides(this.slideIndex);
+        if (this.container.classList == 'page') {
+          e.preventDefault();
+          this.slideIndex = 1;
+          this.showSlides(this.slideIndex);
+        }
       });
     });
     this.prevModule.forEach(arrow => {
@@ -433,6 +468,11 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
       } catch (e) {}
       this.showSlides(this.slideIndex);
       this.bindTriggers();
+      try {
+        this.linkPageToModels();
+        this.linkCardsToModels('.showup__content-slider .card');
+        this.linkCardsToModels('.modules__content-slider .card');
+      } catch (e) {}
     }
   }
 }

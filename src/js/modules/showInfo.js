@@ -9,13 +9,16 @@ export default class ShowInfo {
 		msgBlock.style.marginTop = '20px';
 	}
 
+
 	bindTriggers() {
 		this.triggers.forEach(trigger => {
-			const sibling = trigger.closest('.module__info-show').nextElementSibling;
-			sibling.classList.add('animated');
-			trigger.addEventListener('click',() => {
-				this.toggleMessage(sibling);
-			});
+			try {
+				const sibling = trigger.closest('.module__info-show').nextElementSibling;
+				sibling.classList.add('animated');
+				trigger.addEventListener('click',() => {
+					this.toggleMessage(sibling);
+				});
+			} catch(e){}
 		});
 	}
 

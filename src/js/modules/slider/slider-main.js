@@ -3,6 +3,7 @@ import Slider from './slider';
 export default class MainSlider extends Slider {
 	constructor(btns) {
 		super(btns);
+
 	}
 
 	showSlides(n) {
@@ -10,14 +11,12 @@ export default class MainSlider extends Slider {
 			if (n > this.slides.length) {
 				this.slideIndex = 1;
 			}
-	
 			if (n < 1) {
 				this.slideIndex = this.slides.length;
 			}
 	
 			try {
 				this.hanson.style.opacity = '0';
-	
 				if (n === 3) {
 					this.hanson.classList.add('animated');
 					setTimeout(() => {
@@ -28,21 +27,57 @@ export default class MainSlider extends Slider {
 					this.hanson.classList.remove('slideInUp');
 				}
 			} catch(e) {}
+
 			// console.log(this.slides);
 			// this.slides.forEach(slide => {
 			// 	slide.classList.add('animated');
 			// 	slide.classList.remove('fadeIn');
 			// 	slide.style.display = 'none';
-			// });
+			// }); 
+
 			for (const slide of this.slides) {
 				slide.classList.add('animated');
 				slide.classList.remove('fadeIn');
 				slide.style.display = 'none';
 			}
-				
+			
 			this.slides[this.slideIndex - 1].classList.add('fadeIn');
 			this.slides[this.slideIndex - 1].style.display = 'block';
+
 		} catch(e) {}
+	}
+
+	link() {
+		let path = 'modules.html';
+		const link = document.createElement('a');
+		link.setAttribute('href', path);
+		link.style.display = 'none';
+
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		console.log('hi');
+	}
+
+	linkPageToModels() {
+		const trigger = document.querySelector('.showup__content-explore .plus');
+		trigger.addEventListener('click', () => {
+			this.link();
+		});
+	}
+
+	linkCardsToModels(cards) {
+		this.cards = document.querySelectorAll(cards);
+		this.cards.forEach(card => {
+			card.addEventListener('click', () => {
+				if (card.classList.contains('card-active')) {
+					let index = card.querySelector('.card__controls-count');
+					index = +index.textContent.replace(/[^0-9]/g, '');
+					console.log(index);
+					this.link();
+				}
+			});
+		});
 	}
 
 	plusSlides(n) {
@@ -54,11 +89,12 @@ export default class MainSlider extends Slider {
 			btn.addEventListener('click', () => {
 				this.plusSlides(1);
 			});
-
 			btn.parentNode.previousElementSibling.addEventListener('click', (e) => {
-				e.preventDefault();
-				this.slideIndex = 1;
-				this.showSlides(this.slideIndex);
+				if (this.container.classList == 'page') {
+					e.preventDefault();
+					this.slideIndex = 1;
+					this.showSlides(this.slideIndex);
+				}
 			});
 		});
 
@@ -86,6 +122,12 @@ export default class MainSlider extends Slider {
 			
 			this.showSlides(this.slideIndex);
 			this.bindTriggers();
+
+			try {
+				this.linkPageToModels();
+				this.linkCardsToModels('.showup__content-slider .card');
+				this.linkCardsToModels('.modules__content-slider .card');
+			} catch(e) {}
 		}
 	} 
 }

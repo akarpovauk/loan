@@ -8,7 +8,7 @@ export default class Slider {
 		nextModule = null,
 		activeClass = '',
 		animate,
-		autoplay 
+		autoplay
 	}) 
 	{
 		this.container = document.querySelector(container);
