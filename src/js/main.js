@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		prevModule: '.prevmodule',
 		nextModule: '.nextmodule'
 	});
+	// modulePageSlider.showModel();
 	modulePageSlider.render();
 
 	const showUpSlider = new MiniSlider({

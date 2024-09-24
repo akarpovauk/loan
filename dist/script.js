@@ -370,7 +370,7 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
         this.slideIndex = 1;
       }
       if (n < 1) {
-        this.slideIndex = this.slides.length;
+        index = this.slides.length;
       }
       try {
         this.hanson.style.opacity = '0';
@@ -384,14 +384,6 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
           this.hanson.classList.remove('slideInUp');
         }
       } catch (e) {}
-
-      // console.log(this.slides);
-      // this.slides.forEach(slide => {
-      // 	slide.classList.add('animated');
-      // 	slide.classList.remove('fadeIn');
-      // 	slide.style.display = 'none';
-      // }); 
-
       for (const slide of this.slides) {
         slide.classList.add('animated');
         slide.classList.remove('fadeIn');
@@ -409,7 +401,6 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    console.log('hi');
   }
   linkPageToModels() {
     const trigger = document.querySelector('.showup__content-explore .plus');
@@ -424,13 +415,27 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
         if (card.classList.contains('card-active')) {
           let index = card.querySelector('.card__controls-count');
           index = +index.textContent.replace(/[^0-9]/g, '');
-          console.log(index);
           this.link();
+          localStorage.setItem('index', index);
         }
       });
     });
   }
+  showModel() {
+    try {
+      let index = localStorage.getItem('index');
+      this.slideIndex = +index;
+      if (this.container.classList == 'moduleapp') {
+        localStorage.removeItem('index');
+        this.showSlides(this.slideIndex);
+        // this.bindTriggers();
+      }
+    } catch (e) {}
+  }
   plusSlides(n) {
+    if (!this.slideIndex) {
+      this.slideIndex = 1;
+    }
     this.showSlides(this.slideIndex += n);
   }
   bindTriggers() {
@@ -469,6 +474,7 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
       this.showSlides(this.slideIndex);
       this.bindTriggers();
       try {
+        this.showModel();
         this.linkPageToModels();
         this.linkCardsToModels('.showup__content-slider .card');
         this.linkCardsToModels('.modules__content-slider .card');
@@ -30915,6 +30921,7 @@ window.addEventListener('DOMContentLoaded', () => {
     prevModule: '.prevmodule',
     nextModule: '.nextmodule'
   });
+  // modulePageSlider.showModel();
   modulePageSlider.render();
   const showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
     container: '.showup__content-slider',

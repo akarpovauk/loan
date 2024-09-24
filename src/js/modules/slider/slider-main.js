@@ -3,7 +3,6 @@ import Slider from './slider';
 export default class MainSlider extends Slider {
 	constructor(btns) {
 		super(btns);
-
 	}
 
 	showSlides(n) {
@@ -12,7 +11,7 @@ export default class MainSlider extends Slider {
 				this.slideIndex = 1;
 			}
 			if (n < 1) {
-				this.slideIndex = this.slides.length;
+				index = this.slides.length;
 			}
 	
 			try {
@@ -28,22 +27,14 @@ export default class MainSlider extends Slider {
 				}
 			} catch(e) {}
 
-			// console.log(this.slides);
-			// this.slides.forEach(slide => {
-			// 	slide.classList.add('animated');
-			// 	slide.classList.remove('fadeIn');
-			// 	slide.style.display = 'none';
-			// }); 
-
 			for (const slide of this.slides) {
 				slide.classList.add('animated');
 				slide.classList.remove('fadeIn');
 				slide.style.display = 'none';
 			}
-			
+
 			this.slides[this.slideIndex - 1].classList.add('fadeIn');
 			this.slides[this.slideIndex - 1].style.display = 'block';
-
 		} catch(e) {}
 	}
 
@@ -56,7 +47,6 @@ export default class MainSlider extends Slider {
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
-		console.log('hi');
 	}
 
 	linkPageToModels() {
@@ -73,15 +63,31 @@ export default class MainSlider extends Slider {
 				if (card.classList.contains('card-active')) {
 					let index = card.querySelector('.card__controls-count');
 					index = +index.textContent.replace(/[^0-9]/g, '');
-					console.log(index);
 					this.link();
+					localStorage.setItem('index', index);
 				}
 			});
 		});
 	}
 
+	showModel() {
+		try { 
+			let index = localStorage.getItem('index');
+			this.slideIndex = +index;
+			if (this.container.classList == 'moduleapp') {
+				localStorage.removeItem('index');
+
+				this.showSlides(this.slideIndex);
+				// this.bindTriggers();
+			}
+		} catch(e){}
+	}
+
 	plusSlides(n) {
-		this.showSlides(this.slideIndex += n);
+		if (!this.slideIndex) {
+			this.slideIndex = 1;
+		}
+		this.showSlides( (this.slideIndex) += n);
 	}
 
 	bindTriggers() {
@@ -119,11 +125,10 @@ export default class MainSlider extends Slider {
 			try {
 				this.hanson = document.querySelector('.hanson');
 			} catch(e){}
-			
 			this.showSlides(this.slideIndex);
 			this.bindTriggers();
-
 			try {
+				this.showModel();
 				this.linkPageToModels();
 				this.linkCardsToModels('.showup__content-slider .card');
 				this.linkCardsToModels('.modules__content-slider .card');
